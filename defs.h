@@ -5,6 +5,7 @@ typedef unsigned long long U64;
 
 #define NAME "ChessEngine 1.0"
 #define BRD_SQ_NUM 120
+#define MAXGAMEMOVES 2048
 
 enum {EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK};
 enum {FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE};
@@ -22,6 +23,15 @@ enum {
 };
 
 enum {FALSE, TRUE};
+enum {WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8}
+
+typedef struct{
+	int move;
+	int castlePerm;
+	int enPas;
+	int fiftyMove;
+	U64 posKey;
+} S_UNDO;
 
 typedef struct {
 	int pieces[BRD_SQ_NUM];
@@ -32,12 +42,13 @@ typedef struct {
 	int fiftyMove;
 	int ply;
 	int hisPly;
+	int castlePerm;
 	U64 posKey;
 	int pceNum[13];
 	int bigPce[3];
 	int majPce[3];
 	int minPce[3];
-
+	S_UNDO history[MAXGAMEMOVES];
 } S_BOARD;
 
 #endif
