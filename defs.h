@@ -23,7 +23,7 @@ enum {
 };
 
 enum {FALSE, TRUE};
-enum {WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8}
+enum {WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8};
 
 typedef struct{
 	int move;
