@@ -7,10 +7,10 @@ typedef unsigned long long U64;
 #define BRD_SQ_NUM 120
 #define MAXGAMEMOVES 2048
 
-enum {EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK};
-enum {FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE};
-enum {RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8, RANK_NONE};
-enum {WHITE, BLACK, BOTH};
+enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK };
+enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE };
+enum { RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8, RANK_NONE };
+enum { WHITE, BLACK, BOTH };
 enum {
 	A1 = 21, B1, C1, D1, E1, F1, G1, H1,
 	A2 = 31, B2, C2, D2, E2, F2, G2, H2,
@@ -22,33 +22,62 @@ enum {
 	A8 = 91, B8, C8, D8, E8, F8, G8, H8, NO_SQ
 };
 
-enum {FALSE, TRUE};
-enum {WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8};
+enum { FALSE, TRUE };
+enum { WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8 };
 
-typedef struct{
+// undo structure
+typedef struct {
+
 	int move;
 	int castlePerm;
 	int enPas;
 	int fiftyMove;
 	U64 posKey;
+
 } S_UNDO;
 
+// board structure
 typedef struct {
+
 	int pieces[BRD_SQ_NUM];
 	U64 pawns[3];
+
 	int KingSq[2];
+
 	int side;
 	int enPas;
 	int fiftyMove;
+
 	int ply;
 	int hisPly;
+
 	int castlePerm;
+
 	U64 posKey;
+
 	int pceNum[13];
 	int bigPce[3];
 	int majPce[3];
 	int minPce[3];
+
 	S_UNDO history[MAXGAMEMOVES];
+
 } S_BOARD;
+
+/* MACROS */
+
+// conversion calculation
+#define FR2SQ(f, r) ( (21 + (f) ) + ( (r) * 10 ) )
+
+/* GLOBALS */
+
+// conversion arrays to exchange correct index numbers
+// between the base64 array (actual board) and base120
+// array (the whole game board)
+extern int Sq120ToSq64[BRD_SQ_NUM];
+extern int Sq64ToSq120[64];
+
+/* FUNCTIONS */
+extern void AllInit();
 
 #endif
